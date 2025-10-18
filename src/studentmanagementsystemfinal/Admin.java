@@ -10,8 +10,8 @@ package studentmanagementsystemfinal;
  */
 public abstract class Admin extends User {
 
-    public Admin(String ID, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth) {
-        super(ID, password, "Admin", firstName, lastName, email, phoneNumber, dateOfBirth);
+    public Admin(String ID, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
+        super(ID, password, firstName, lastName, email, phoneNumber, dateOfBirth, role);
     }
 
 }

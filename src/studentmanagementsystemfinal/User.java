@@ -17,9 +17,10 @@ public abstract class User
     protected String email; 
     protected String phoneNumber; 
     protected String dateOfBirth;
+    protected String role; 
     
 
-    public User(String ID, String password, String role, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth) {
+    public User(String ID, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
        
         this.ID = ID; 
         this.password = password; 
@@ -28,6 +29,7 @@ public abstract class User
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        this.role = role; 
         
     }
     
@@ -91,6 +93,16 @@ public abstract class User
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
 }
 
 
