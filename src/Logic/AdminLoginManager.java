@@ -2,41 +2,42 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dataAccess;
+package Logic;
 
 import Database.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author airi
  */
-public class AdminData 
-{
-    private final Connection conn; 
-    
-    public AdminData()
-    {
+public class AdminLoginManager {
+
+    private final Connection conn;
+
+    public AdminLoginManager() {
         this.conn = DatabaseManager.getConnection();
     }
-    
-    //add new admin
 
-    public boolean insertAdmin (String adminID, String username)
-    {
-        String sql = "INSERT INTO admins (userID) VALUES (?)";
+    public boolean validateAdminLogin(String username, String password) {
+        String sql = """
+            SELECT * FROM users
+            WHERE username = ? AND password = ? AND role = 'admin'       
+                   """;
+
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, adminID);
-            pstmt.setString(2, username);
-            pstmt.executeUpdate();
-            return true;
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
-      
+
 }

@@ -23,22 +23,23 @@ public class UserData
         this.conn = DatabaseManager.getConnection();
     }
 
-    public boolean insertUser(String id, String password, String firstName, String lastName, String email, String dob, String phone, String role)
+    public boolean insertUser(String id, String username, String password, String firstName, String lastName, String email, String dob, String phone, String role)
     {
         String sql = """
-            INSERT INTO usres (id, password, firstName lastName, email, dateOfBirth, phoneNumber, role)         
+            INSERT INTO users (id, username, password, firstName lastName, email, dateOfBirth, phoneNumber, role)         
                      """;
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) 
         {
             pstmt.setString(1, id);
-            pstmt.setString(2, password);
-            pstmt.setString(3, firstName);
-            pstmt.setString(4, lastName);
-            pstmt.setString(5, email);
-            pstmt.setString(6, dob);
-            pstmt.setString(7, phone);
-            pstmt.setString(8, role);
+            pstmt.setString(2, username);
+            pstmt.setString(3, password);
+            pstmt.setString(4, firstName);
+            pstmt.setString(5, lastName);
+            pstmt.setString(6, email);
+            pstmt.setString(7, dob);
+            pstmt.setString(8, phone);
+            pstmt.setString(9, role);
             pstmt.executeUpdate();
             return true;
         } 

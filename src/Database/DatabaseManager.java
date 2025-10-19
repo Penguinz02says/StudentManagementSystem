@@ -31,6 +31,7 @@ public class DatabaseManager
         System.out.println("Connected to StudentManagementDB");
 
         createTables();
+        insertDefaultAdmin();
     }
 
     // Create all tables 
@@ -49,6 +50,7 @@ public class DatabaseManager
         String sql = """
             CREATE TABLE users (
                 id VARCHAR(8) PRIMARY KEY,
+                username VARCHAR(50) UNIQUE,    
                 password VARCHAR(255),
                 firstName VARCHAR(50),
                 lastName VARCHAR(50),
@@ -67,9 +69,10 @@ public class DatabaseManager
     {
         String sql = """
             CREATE TABLE students (
-                id VARCHAR(8) PRIMARY KEY,
+                user_id VARCHAR(8) PRIMARY KEY,
+                studentUsername VARCHAR(50) UNIQUE,   
                 major VARCHAR(100),
-                CONSTRAINT fk_user FOREIGN KEY (id) REFERENCES users(id)
+                CONSTRAINT fk_user_student FOREIGN KEY (user_id) REFERENCES users(id)
             )
         """;
 
@@ -81,9 +84,8 @@ public class DatabaseManager
     {
         String sql = """
             CREATE TABLE admins (
-                adminID VARCHAR(8) PRIMARY KEY,
-                userID VARCHAR(8) UNIQUE,
-                CONSTRAINT fk_user_admin FOREIGN KEY (userID) REFERENCES users(id)
+                user_id VARCHAR(8) PRIMARY KEY,
+                CONSTRAINT fk_user_admin FOREIGN KEY (user_id) REFERENCES users(id)
             )
         """;
 
@@ -97,8 +99,7 @@ public class DatabaseManager
             CREATE TABLE courses (
                 courseCode VARCHAR(20) PRIMARY KEY,
                 courseName VARCHAR(100),
-                credits DOUBLE,
-                level INT
+                credits DOUBLE
             )
         """;
 
@@ -110,9 +111,11 @@ public class DatabaseManager
     {
         String sql = """
             CREATE TABLE studentCourses (
-                studentID VARCHAR(8) REFERENCES students(id),
-                courseCode VARCHAR(20) REFERENCES courses(courseCode),
-                PRIMARY KEY (studentID, courseCode)
+                student_id VARCHAR(8),
+                courseCode VARCHAR(20),
+                PRIMARY KEY (student_id, courseCode),
+                CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(user_id),
+                CONSTRAINT fk_course FOREIGN KEY (courseCode) REFERENCES courses(courseCode)
             )
         """;
 
@@ -137,6 +140,30 @@ public class DatabaseManager
             }
         }
     }
+    
+    //insert default Admin
+    
+    private void insertDefaultAdmin() 
+    {
+    String sql = """
+        INSERT INTO users (id, username, password, firstName, lastName, email, dateOfBirth, phoneNumber, role)
+        VALUES ('00000001', 'admin', 'adminpass', 'John', 'Smith', 'john.Smith@school.nz', '08/02/1988', '021234567', 'admin')
+    """;
+    try (Statement stmt = conn.createStatement()) 
+    {
+        stmt.executeUpdate(sql);
+        System.out.println("Default admin account created.");
+    } 
+    catch (SQLException e) 
+    {
+        if ("23505".equals(e.getSQLState())) 
+        {
+            System.out.println("Default admin already exists.");
+        } else {
+            System.out.println("Error inserting default admin: " + e.getMessage());
+        }
+    }
+}
 
     public static Connection getConnection() 
     {
