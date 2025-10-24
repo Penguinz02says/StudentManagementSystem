@@ -68,6 +68,7 @@ public class AddStudentForm extends javax.swing.JFrame {
         IDTextField = new javax.swing.JTextField();
         phoneNumberTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jButtonBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,19 +103,19 @@ public class AddStudentForm extends javax.swing.JFrame {
 
         studentNameLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         studentNameLabel.setText("Student Name");
-        jPanel1.add(studentNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+        jPanel1.add(studentNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, -1, -1));
 
         PhoneNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         PhoneNumberLabel.setText("Phone Number");
-        jPanel1.add(PhoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
+        jPanel1.add(PhoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
         StudentEmailLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         StudentEmailLabel.setText("Student Email");
-        jPanel1.add(StudentEmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, 20));
+        jPanel1.add(StudentEmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, 20));
 
         DateOfBirthLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         DateOfBirthLabel.setText("Date Of Birth");
-        jPanel1.add(DateOfBirthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
+        jPanel1.add(DateOfBirthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, -1, -1));
 
         DOBTextField.setBackground(new java.awt.Color(234, 239, 249));
         DOBTextField.setText("MM/DD/YYYY");
@@ -123,11 +124,11 @@ public class AddStudentForm extends javax.swing.JFrame {
                 DOBTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(DOBTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 350, -1));
+        jPanel1.add(DOBTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 350, -1));
 
         IDLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         IDLabel.setText("ID");
-        jPanel1.add(IDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+        jPanel1.add(IDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
         lastNameTextField.setBackground(new java.awt.Color(234, 239, 249));
         lastNameTextField.setText("Last Name");
@@ -137,12 +138,12 @@ public class AddStudentForm extends javax.swing.JFrame {
                 lastNameTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(lastNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 170, -1));
+        jPanel1.add(lastNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 170, -1));
 
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(93, 34, 250));
-        jLabel8.setText("Student Registration Form ");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
+        jLabel8.setText("Student Registration");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
 
         studentEmailTextField.setBackground(new java.awt.Color(238, 238, 238));
         studentEmailTextField.setToolTipText("");
@@ -151,7 +152,7 @@ public class AddStudentForm extends javax.swing.JFrame {
                 studentEmailTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(studentEmailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 350, -1));
+        jPanel1.add(studentEmailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 350, -1));
 
         firstNameTextField.setBackground(new java.awt.Color(234, 239, 249));
         firstNameTextField.setText("First Name");
@@ -161,7 +162,7 @@ public class AddStudentForm extends javax.swing.JFrame {
                 firstNameTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 170, -1));
+        jPanel1.add(firstNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 170, -1));
 
         IDTextField.setBackground(new java.awt.Color(238, 238, 238));
         IDTextField.setToolTipText("");
@@ -170,7 +171,7 @@ public class AddStudentForm extends javax.swing.JFrame {
                 IDTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(IDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 170, -1));
+        jPanel1.add(IDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 170, -1));
 
         phoneNumberTextField.setBackground(new java.awt.Color(234, 239, 249));
         phoneNumberTextField.setToolTipText("");
@@ -179,7 +180,7 @@ public class AddStudentForm extends javax.swing.JFrame {
                 phoneNumberTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(phoneNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 350, -1));
+        jPanel1.add(phoneNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 350, -1));
 
         jButton2.setBackground(new java.awt.Color(93, 34, 250));
         jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
@@ -190,10 +191,19 @@ public class AddStudentForm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 390, 140, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 140, 30));
         jButton2.setOpaque(true);
         jButton2.setContentAreaFilled(true);
         jButton2.setBorderPainted(false);
+
+        jButtonBack.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jButtonBack.setText("Back");
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -281,6 +291,12 @@ public class AddStudentForm extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+        AdminDashboardGUI dashboard = new AdminDashboardGUI();
+        dashboard.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -334,6 +350,7 @@ public class AddStudentForm extends javax.swing.JFrame {
     private javax.swing.JLabel StudentEmailLabel;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
