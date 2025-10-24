@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import gui.AdminDashboardGUI;
 import Logic.IDGenerator;
+import java.awt.Color;
+import javax.swing.JTextField;
 
 /**
  *
@@ -25,22 +27,23 @@ public class AddStudentForm extends javax.swing.JFrame {
         initComponents();
         
         String username = IDGenerator.generateUsername();
-        
         String studentID = IDGenerator.generateID();
+
         IDTextField.setText(studentID);
-        
         //disable editing for ID
         IDTextField.setEditable(false);
         IDTextField.setEnabled(false);
-        
-        
-        
+  
         String email = username + "@school.co.nz";
         studentEmailTextField. setText(email);
-        
         //disable editing for email
         studentEmailTextField.setEditable(false);  
         studentEmailTextField.setEnabled(false);
+        
+        textFieldOnClick(firstNameTextField, "First Name");
+        textFieldOnClick(lastNameTextField, "Last Name");
+        textFieldOnClick(phoneNumberTextField, "Phone Number");    
+        
     }
 
     /**
@@ -340,6 +343,23 @@ public class AddStudentForm extends javax.swing.JFrame {
         AdminDashboardGUI dashboard = new AdminDashboardGUI(); // make this JFrame class
         dashboard.setVisible(true);
     }
+    
+     private void textFieldOnClick(JTextField field, String placeholder)
+   {
+       field.setEditable(false);
+       field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+     field.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!field.isEditable()) {
+                field.setEditable(true);
+                field.setText("");
+                field.setForeground(Color.BLACK);
+            }
+        }
+    });
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DOBTextField;

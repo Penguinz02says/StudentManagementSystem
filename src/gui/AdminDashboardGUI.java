@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import gui.AddStudentForm;
 import gui.AdminLoginGUI;
+
+import java.awt.Color;
+import javax.swing.JTextField;
 /**
  *
  * @author airi
@@ -24,6 +27,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame
     public AdminDashboardGUI() {
         initComponents();
     
+        textFieldOnClick(searchField, "Search");
         loadStudentTable(); 
     }
     
@@ -49,7 +53,6 @@ public class AdminDashboardGUI extends javax.swing.JFrame
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         searchField = new javax.swing.JTextField();
-        Refresh = new javax.swing.JButton();
         buttonAddStudent1 = new javax.swing.JButton();
         buttonRemoveStudent1 = new javax.swing.JButton();
 
@@ -137,8 +140,9 @@ public class AdminDashboardGUI extends javax.swing.JFrame
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 510));
 
-        jLabel3.setText("All Students");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel3.setText("View Students");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
 
         studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,21 +167,20 @@ public class AdminDashboardGUI extends javax.swing.JFrame
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 650, 370));
 
+        searchField.setEditable(false);
+        searchField.setForeground(new java.awt.Color(153, 153, 153));
         searchField.setText("Search");
+        searchField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchFieldMouseClicked(evt);
+            }
+        });
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchFieldActionPerformed(evt);
             }
         });
         jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 640, -1));
-
-        Refresh.setText("Refresh");
-        Refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RefreshActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, -1, -1));
 
         buttonAddStudent1.setText("Add Student");
         buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
@@ -263,12 +266,54 @@ public class AdminDashboardGUI extends javax.swing.JFrame
     }//GEN-LAST:event_buttonRemoveStudent1ActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO: implement search funcitonality
-    }//GEN-LAST:event_searchFieldActionPerformed
+        String searchText = searchField.getText().trim().toLowerCase();
+        
+        if(searchText.isEmpty())
+        {
+            loadStudentTable();
+            return;
+        }
+        
+        //temporary model to store search results
+        
+        DefaultTableModel model = (DefaultTableModel) studentTable.getModel();
+        DefaultTableModel filtered = new DefaultTableModel(new Object[] {"ID", "Username", "First Name", "Last Name", "Major", "Email", "Phone", "DOB"}, 0);
+        
+        //loop through rows and att matching to filtered model
+        
+        for (int i = 0; i < model.getRowCount(); i++) 
+    {
+        String id = model.getValueAt(i, 0).toString().toLowerCase();
+        String username = model.getValueAt(i, 1).toString().toLowerCase();
+        String firstName = model.getValueAt(i, 2).toString().toLowerCase();
+        String lastName = model.getValueAt(i, 3).toString().toLowerCase();
+        String fullName = firstName + " " + lastName; 
+                
+       
+            
+          if (id.contains(searchText) || username.contains(searchText) || firstName.contains(searchText) || lastName.contains(searchText) || fullName.contains(searchText)) 
+{
+            filtered.addRow(new Object[]
+            {
+                model.getValueAt(i, 0),
+                model.getValueAt(i, 1),
+                model.getValueAt(i, 2),
+                model.getValueAt(i, 3),
+                model.getValueAt(i, 4),
+                model.getValueAt(i, 5),
+                model.getValueAt(i, 6),
+                model.getValueAt(i, 7)
+            });
+        }
+    }
 
-    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RefreshActionPerformed
+    studentTable.setModel(filtered);
+
+
+        
+        
+                
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     private void jButtonCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoursesActionPerformed
         // TODO add your handling code here:
@@ -277,6 +322,10 @@ public class AdminDashboardGUI extends javax.swing.JFrame
     private void jButtonDashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDashboard1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonDashboard1ActionPerformed
+
+    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
+        
+    }//GEN-LAST:event_searchFieldMouseClicked
 
     /**
      * @param args the command line arguments
@@ -322,10 +371,27 @@ public class AdminDashboardGUI extends javax.swing.JFrame
     StudentData studentData = new StudentData();
     studentTable.setModel(studentData.getAllStudentsTable());
 }
+   
+   // helper method coded with ChatGPT so that textfield shows placeholder text until user clicks to type
+   private void textFieldOnClick(JTextField field, String placeholder)
+   {
+       field.setEditable(false);
+       field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+     field.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!field.isEditable()) {
+                field.setEditable(true);
+                field.setText("");
+                field.setForeground(Color.BLACK);
+            }
+        }
+    });
+   }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Refresh;
     private javax.swing.JButton buttonAddStudent1;
     private javax.swing.JButton buttonLogOut;
     private javax.swing.JButton buttonRemoveStudent1;
