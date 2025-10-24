@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-
+import gui.AddStudentForm;
 /**
  *
  * @author airi
@@ -21,17 +21,11 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
      */
     public AdminDashboardGUI() {
         initComponents();
-        loadAllStudents();
+    
+        loadStudentTable(); 
     }
     
-    private void loadAllStudents()
-    {
-        try
-        {
-            ResultSet rs = studentData.getAllStudents();
-            D
-        }
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,19 +41,19 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        buttonAddStudent1 = new javax.swing.JButton();
+        buttonRemoveStudent1 = new javax.swing.JButton();
+        buttonLogOut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         searchField = new javax.swing.JTextField();
         Refresh = new javax.swing.JButton();
-        buttonLogOut = new javax.swing.JButton();
-        buttonAddStudent1 = new javax.swing.JButton();
-        buttonRemoveStudent1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
@@ -88,32 +82,70 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204)));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel2.setText("Dashboard");
+
+        buttonAddStudent1.setText("Add Student");
+        buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddStudent1ActionPerformed(evt);
+            }
+        });
+
+        buttonRemoveStudent1.setText("Remove Student");
+        buttonRemoveStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoveStudent1ActionPerformed(evt);
+            }
+        });
+
+        buttonLogOut.setText("Log Out");
+        buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLogOutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonRemoveStudent1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonAddStudent1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonLogOut)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
-                .addContainerGap(464, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
+                .addComponent(buttonAddStudent1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonRemoveStudent1)
+                .addGap(171, 171, 171)
+                .addComponent(buttonLogOut)
+                .addContainerGap())
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 150, 500));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 150, 510));
 
         jLabel3.setText("All Students");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
 
         studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,7 +168,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 440, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 650, 410));
 
         searchField.setText("Search");
         searchField.addActionListener(new java.awt.event.ActionListener() {
@@ -144,34 +176,15 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
                 searchFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, -1, -1));
+        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 640, -1));
 
         Refresh.setText("Refresh");
-        jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, -1, -1));
-
-        buttonLogOut.setText("Log Out");
-        buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
+        Refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonLogOutActionPerformed(evt);
+                RefreshActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonLogOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, -1));
-
-        buttonAddStudent1.setText("Add Student");
-        buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddStudent1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(buttonAddStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, -1, -1));
-
-        buttonRemoveStudent1.setText("Remove Student");
-        buttonRemoveStudent1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRemoveStudent1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(buttonRemoveStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 140, -1, -1));
+        jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,26 +207,10 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
 
     private void buttonAddStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddStudent1ActionPerformed
         // TODO add your handling code here:
-        String firstName = JOptionPane.showInputDialog(this, "Enter first name:");
-        String lastName = JOptionPane.showInputDialog(this, "Enter last name:");
-        String email = JOptionPane.showInputDialog(this, "Enter email:");
-        String dateOfBirth = JOptionPane.showInputDialog(this, "Enter date of birth:");
-        String phone = JOptionPane.showInputDialog(this, "Enter phone:");
-
-        String id = Logic.IDGenerator.generateID("users");
+  
+        AddStudentForm addForm = new AddStudentForm();
+        addForm.setVisible(true);   
         
-        boolean success = new Logic.Registration().createAccount(id, phone, firstName, lastName, email, phone, dateOfBirth);
-        
-        if (success) 
-        {
-            JOptionPane.showMessageDialog(this, "Student added successfully!");
-            loadAllStudents();
-        } 
-        
-        else 
-        {
-            JOptionPane.showMessageDialog(this, "Error adding student.");
-        }
     }//GEN-LAST:event_buttonAddStudent1ActionPerformed
 
     private void buttonRemoveStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveStudent1ActionPerformed
@@ -223,6 +220,10 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RefreshActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,7 +260,13 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
             }
         });
     }
+    
+   private void loadStudentTable() {
+    StudentData studentData = new StudentData();
+    studentTable.setModel(studentData.getAllStudentsTable());
+}
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Refresh;
     private javax.swing.JButton buttonAddStudent1;

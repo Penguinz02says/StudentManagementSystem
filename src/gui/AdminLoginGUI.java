@@ -152,7 +152,7 @@ public class AdminLoginGUI extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             if(success) {
                 JOptionPane.showMessageDialog(this, "Login successful!");
-                openAdminDashboard(); // another JFrame
+                openAdminDashboardGUI(); // another JFrame
                 this.dispose(); // close login
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid ID or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
@@ -201,10 +201,13 @@ public class AdminLoginGUI extends javax.swing.JFrame {
         });
     }
     
-    private void openAdminDashboard() 
+    private void openAdminDashboardGUI() 
     {
-        AdminDashboardGUI dashboard = new AdminDashboardGUI(); // make this JFrame class
+        SwingUtilities.invokeLater(() -> {
+        AdminDashboardGUI dashboard = new AdminDashboardGUI();
         dashboard.setVisible(true);
+    });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -36,18 +36,18 @@ public class AddStudentForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        firstName3 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        firstName5 = new javax.swing.JTextField();
+        studentNameLabel = new javax.swing.JLabel();
+        PhoneNumberLabel = new javax.swing.JLabel();
+        StudentEmailLabel = new javax.swing.JLabel();
+        DateOfBirthLabel = new javax.swing.JLabel();
+        DOBTextField = new javax.swing.JTextField();
+        IDLabel = new javax.swing.JLabel();
+        lastNameTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        firstName7 = new javax.swing.JTextField();
-        firstName8 = new javax.swing.JTextField();
-        firstName9 = new javax.swing.JTextField();
-        firstName10 = new javax.swing.JTextField();
+        studentEmailTextField = new javax.swing.JTextField();
+        firstNameTextField = new javax.swing.JTextField();
+        IDTextField = new javax.swing.JTextField();
+        phoneNumberTextField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,86 +81,86 @@ public class AddStudentForm extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel2.setText("Student Name");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
+        studentNameLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        studentNameLabel.setText("Student Name");
+        jPanel1.add(studentNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel3.setText("Phone Number");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
+        PhoneNumberLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        PhoneNumberLabel.setText("Phone Number");
+        jPanel1.add(PhoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel6.setText("Student Email");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, -1, 20));
+        StudentEmailLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        StudentEmailLabel.setText("Student Email");
+        jPanel1.add(StudentEmailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, 20));
 
-        jLabel7.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel7.setText("Date Of Birth");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
+        DateOfBirthLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        DateOfBirthLabel.setText("Date Of Birth");
+        jPanel1.add(DateOfBirthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, -1));
 
-        firstName3.setBackground(new java.awt.Color(234, 239, 249));
-        firstName3.setText("MM/DD/YYYY");
-        firstName3.addActionListener(new java.awt.event.ActionListener() {
+        DOBTextField.setBackground(new java.awt.Color(234, 239, 249));
+        DOBTextField.setText("MM/DD/YYYY");
+        DOBTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName3ActionPerformed(evt);
+                DOBTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 350, -1));
+        jPanel1.add(DOBTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 350, -1));
 
-        jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        jLabel9.setText("ID");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
+        IDLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        IDLabel.setText("ID");
+        jPanel1.add(IDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
-        firstName5.setBackground(new java.awt.Color(234, 239, 249));
-        firstName5.setText("Last Name");
-        firstName5.setToolTipText("");
-        firstName5.addActionListener(new java.awt.event.ActionListener() {
+        lastNameTextField.setBackground(new java.awt.Color(234, 239, 249));
+        lastNameTextField.setText("Last Name");
+        lastNameTextField.setToolTipText("");
+        lastNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName5ActionPerformed(evt);
+                lastNameTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 170, -1));
+        jPanel1.add(lastNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 170, -1));
 
         jLabel8.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(93, 34, 250));
         jLabel8.setText("Student Registration Form ");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
-        firstName7.setBackground(new java.awt.Color(238, 238, 238));
-        firstName7.setToolTipText("");
-        firstName7.addActionListener(new java.awt.event.ActionListener() {
+        studentEmailTextField.setBackground(new java.awt.Color(238, 238, 238));
+        studentEmailTextField.setToolTipText("");
+        studentEmailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName7ActionPerformed(evt);
+                studentEmailTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 350, -1));
+        jPanel1.add(studentEmailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 350, -1));
 
-        firstName8.setBackground(new java.awt.Color(234, 239, 249));
-        firstName8.setText("First Name");
-        firstName8.setToolTipText("");
-        firstName8.addActionListener(new java.awt.event.ActionListener() {
+        firstNameTextField.setBackground(new java.awt.Color(234, 239, 249));
+        firstNameTextField.setText("First Name");
+        firstNameTextField.setToolTipText("");
+        firstNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName8ActionPerformed(evt);
+                firstNameTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 170, -1));
+        jPanel1.add(firstNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 170, -1));
 
-        firstName9.setBackground(new java.awt.Color(238, 238, 238));
-        firstName9.setToolTipText("");
-        firstName9.addActionListener(new java.awt.event.ActionListener() {
+        IDTextField.setBackground(new java.awt.Color(238, 238, 238));
+        IDTextField.setToolTipText("");
+        IDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName9ActionPerformed(evt);
+                IDTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 170, -1));
+        jPanel1.add(IDTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 170, -1));
 
-        firstName10.setBackground(new java.awt.Color(234, 239, 249));
-        firstName10.setToolTipText("");
-        firstName10.addActionListener(new java.awt.event.ActionListener() {
+        phoneNumberTextField.setBackground(new java.awt.Color(234, 239, 249));
+        phoneNumberTextField.setToolTipText("");
+        phoneNumberTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstName10ActionPerformed(evt);
+                phoneNumberTextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(firstName10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 350, -1));
+        jPanel1.add(phoneNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 350, -1));
 
         jButton2.setBackground(new java.awt.Color(93, 34, 250));
         jButton2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
@@ -171,7 +171,7 @@ public class AddStudentForm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 450, 140, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 390, 140, 30));
         jButton2.setOpaque(true);
         jButton2.setContentAreaFilled(true);
         jButton2.setBorderPainted(false);
@@ -194,53 +194,56 @@ public class AddStudentForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void firstName5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName5ActionPerformed
+    private void lastNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName5ActionPerformed
+    }//GEN-LAST:event_lastNameTextFieldActionPerformed
 
-    private void firstName3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName3ActionPerformed
+    private void DOBTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DOBTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName3ActionPerformed
+    }//GEN-LAST:event_DOBTextFieldActionPerformed
 
-    private void firstName7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName7ActionPerformed
+    private void studentEmailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentEmailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName7ActionPerformed
+    }//GEN-LAST:event_studentEmailTextFieldActionPerformed
 
-    private void firstName8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName8ActionPerformed
+    private void firstNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName8ActionPerformed
+    }//GEN-LAST:event_firstNameTextFieldActionPerformed
 
-    private void firstName9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName9ActionPerformed
+    private void IDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName9ActionPerformed
+    }//GEN-LAST:event_IDTextFieldActionPerformed
 
-    private void firstName10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstName10ActionPerformed
+    private void phoneNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_firstName10ActionPerformed
+    }//GEN-LAST:event_phoneNumberTextFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String usernameText = username.getText().trim();
-        String passwordText = new String(password.getPassword());
+    String id = IDTextField.getText().trim();
+    String firstName = firstNameTextField.getText().trim();
+    String lastName = lastNameTextField.getText().trim();
+    String dob = DOBTextField.getText().trim();
+    String phone = phoneNumberTextField.getText().trim();
+    String email = studentEmailTextField.getText().trim();
 
-        if(usernameText.isEmpty() || passwordText.isEmpty())
-        {
-            JOptionPane.showMessageDialog(this, "Invalid login.");
-            return;
-        }
+    // validation that all text fields are filled
+    if ( firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
+        return;
+    }
 
-        new Thread(() -> {
-            boolean success = loginManager.validateAdminLogin(usernameText, passwordText);
+    // Call your logic class to create the student
+    Logic.Registration registration = new Logic.Registration();
+    boolean success = registration.createAccount(
+            id, "defaultPass123", "student", firstName, lastName, email, phone, dob, null); 
 
-            SwingUtilities.invokeLater(() -> {
-                if(success) {
-                    JOptionPane.showMessageDialog(this, "Login successful!");
-                    openAdminDashboard(); // another JFrame
-                    this.dispose(); // close login
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid ID or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                }
-            });
-        }).start();
+    if (success) {
+        JOptionPane.showMessageDialog(this, "Student added successfully!");
+        openAdminDashboard();
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, "Failed to add student.");
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -288,21 +291,21 @@ public class AddStudentForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField firstName10;
-    private javax.swing.JTextField firstName3;
-    private javax.swing.JTextField firstName5;
-    private javax.swing.JTextField firstName7;
-    private javax.swing.JTextField firstName8;
-    private javax.swing.JTextField firstName9;
+    private javax.swing.JTextField DOBTextField;
+    private javax.swing.JLabel DateOfBirthLabel;
+    private javax.swing.JLabel IDLabel;
+    private javax.swing.JTextField IDTextField;
+    private javax.swing.JLabel PhoneNumberLabel;
+    private javax.swing.JLabel StudentEmailLabel;
+    private javax.swing.JTextField firstNameTextField;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField lastNameTextField;
+    private javax.swing.JTextField phoneNumberTextField;
+    private javax.swing.JTextField studentEmailTextField;
+    private javax.swing.JLabel studentNameLabel;
     // End of variables declaration//GEN-END:variables
 }

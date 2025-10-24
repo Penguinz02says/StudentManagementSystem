@@ -9,6 +9,7 @@ import Database.DatabaseManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,32 +35,49 @@ public class StudentData
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("e.getMessage()");
+            System.out.println(e.getMessage());
             return false;
         }
 
     }
     
-    public ResultSet getAllStudents()
+    //function coded with help of chatgpt
+
+    public DefaultTableModel getAllStudentsTable() 
     {
         String sql = """
-        SELECT s.user_id, u.username, u.firstName, u.lastName, s.major, u.email, u.phoneNumber, u.dateOfBirth
-        FROM students s
-        INNER JOIN users u ON s.user_id = u.id
-        ORDER BY u.lastName ASC
-    """;
+            SELECT s.user_id, u.username, u.firstName, u.lastName, s.major, u.email, u.phoneNumber, u.dateOfBirth
+            FROM students s
+            INNER JOIN users u ON s.user_id = u.id
+            ORDER BY u.lastName ASC
+        """;
 
-    try {
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        return pstmt.executeQuery();  
-    } 
-    
-    catch (SQLException e) 
-    {
-        System.out.println(e.getMessage());
-        return null;
-    }
-    
+        DefaultTableModel model = new DefaultTableModel(
+            new String[]{"User ID", "Username", "First Name", "Last Name", "Major", "Email", "Phone", "DOB"}, 
+            0
+        );
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("user_id"),
+                    rs.getString("username"),
+                    rs.getString("firstName"),
+                    rs.getString("lastName"),
+                    rs.getString("major"),
+                    rs.getString("email"),
+                    rs.getString("phoneNumber"),
+                    rs.getString("dateOfBirth")
+                });
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return model;
     }
            
 }
