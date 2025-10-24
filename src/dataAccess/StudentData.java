@@ -35,6 +35,7 @@ public class StudentData
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
             return false;
         }
@@ -74,6 +75,7 @@ public class StudentData
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 

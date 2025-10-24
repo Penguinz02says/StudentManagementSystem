@@ -8,6 +8,7 @@ import Logic.AdminLoginManager;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import gui.AdminDashboardGUI;
+import Logic.IDGenerator;
 
 /**
  *
@@ -22,6 +23,24 @@ public class AddStudentForm extends javax.swing.JFrame {
      */
     public AddStudentForm() {
         initComponents();
+        
+        String username = IDGenerator.generateUsername();
+        
+        String studentID = IDGenerator.generateID();
+        IDTextField.setText(studentID);
+        
+        //disable editing for ID
+        IDTextField.setEditable(false);
+        IDTextField.setEnabled(false);
+        
+        
+        
+        String email = username + "@school.co.nz";
+        studentEmailTextField. setText(email);
+        
+        //disable editing for email
+        studentEmailTextField.setEditable(false);  
+        studentEmailTextField.setEnabled(false);
     }
 
     /**
@@ -225,6 +244,10 @@ public class AddStudentForm extends javax.swing.JFrame {
     String dob = DOBTextField.getText().trim();
     String phone = phoneNumberTextField.getText().trim();
     String email = studentEmailTextField.getText().trim();
+    
+    String username = IDGenerator.generateUsername();
+    String defaultPassword = "defaultpass";
+    
 
     // validation that all text fields are filled
     if ( firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty()) {
@@ -232,10 +255,22 @@ public class AddStudentForm extends javax.swing.JFrame {
         return;
     }
 
-    // Call your logic class to create the student
+    // create student
     Logic.Registration registration = new Logic.Registration();
     boolean success = registration.createAccount(
-            id, "defaultPass123", "student", firstName, lastName, email, phone, dob, null); 
+            
+            id,
+            username,
+            defaultPassword,
+            firstName,
+            lastName,
+            email,
+            dob, 
+            phone,
+            "student"     
+    );
+            
+            
 
     if (success) {
         JOptionPane.showMessageDialog(this, "Student added successfully!");

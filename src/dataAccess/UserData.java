@@ -28,7 +28,7 @@ public class UserData
        String sql = 
         """
                 INSERT INTO users (id, username, password, firstName, lastName, email, dateOfBirth, phoneNumber, role)
-                XVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) 
@@ -48,7 +48,7 @@ public class UserData
         
         catch (SQLException e) 
         {
-            System.out.println("e.getMessage()");
+            System.out.println("error inserting user: " + e.getMessage());
             return false;
         }
     }    
