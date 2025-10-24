@@ -25,12 +25,11 @@ public class AdminData
     
     //add new admin
 
-    public boolean insertAdmin (String adminID, String username)
+    public boolean insertAdmin (String adminID)
     {
-        String sql = "INSERT INTO admins (userID) VALUES (?)";
+        String sql = "INSERT INTO admins (user_id) VALUES (?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, adminID);
-            pstmt.setString(2, username);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {

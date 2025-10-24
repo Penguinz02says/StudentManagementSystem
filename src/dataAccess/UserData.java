@@ -25,9 +25,11 @@ public class UserData
 
     public boolean insertUser(String id, String username, String password, String firstName, String lastName, String email, String dob, String phone, String role)
     {
-        String sql = """
-            INSERT INTO users (id, username, password, firstName lastName, email, dateOfBirth, phoneNumber, role)         
-                     """;
+       String sql = 
+        """
+                INSERT INTO users (id, username, password, firstName, lastName, email, dateOfBirth, phoneNumber, role)
+                XVALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) 
         {

@@ -4,6 +4,12 @@
  */
 package gui;
 
+import dataAccess.StudentData;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author airi
@@ -15,6 +21,16 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
      */
     public AdminDashboardGUI() {
         initComponents();
+        loadAllStudents();
+    }
+    
+    private void loadAllStudents()
+    {
+        try
+        {
+            ResultSet rs = studentData.getAllStudents();
+            D
+        }
     }
 
     /**
@@ -26,21 +42,187 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        studentTable = new javax.swing.JTable();
+        searchField = new javax.swing.JTextField();
+        Refresh = new javax.swing.JButton();
+        buttonLogOut = new javax.swing.JButton();
+        buttonAddStudent1 = new javax.swing.JButton();
+        buttonRemoveStudent1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Student Management System");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(322, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(314, 314, 314))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(7, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204)));
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel2.setText("Dashboard");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel2)
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel2)
+                .addContainerGap(464, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 150, 500));
+
+        jLabel3.setText("All Students");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
+
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Student ID ", "Name", "Date Of Birth", "Email", "Phone"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(studentTable);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 440, -1));
+
+        searchField.setText("Search");
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, -1, -1));
+
+        Refresh.setText("Refresh");
+        jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, -1, -1));
+
+        buttonLogOut.setText("Log Out");
+        buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLogOutActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonLogOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, -1));
+
+        buttonAddStudent1.setText("Add Student");
+        buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddStudent1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonAddStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 110, -1, -1));
+
+        buttonRemoveStudent1.setText("Remove Student");
+        buttonRemoveStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoveStudent1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonRemoveStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 140, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogOutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonLogOutActionPerformed
+
+    private void buttonAddStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddStudent1ActionPerformed
+        // TODO add your handling code here:
+        String firstName = JOptionPane.showInputDialog(this, "Enter first name:");
+        String lastName = JOptionPane.showInputDialog(this, "Enter last name:");
+        String email = JOptionPane.showInputDialog(this, "Enter email:");
+        String dateOfBirth = JOptionPane.showInputDialog(this, "Enter date of birth:");
+        String phone = JOptionPane.showInputDialog(this, "Enter phone:");
+
+        String id = Logic.IDGenerator.generateID("users");
+        
+        boolean success = new Logic.Registration().createAccount(id, phone, firstName, lastName, email, phone, dateOfBirth);
+        
+        if (success) 
+        {
+            JOptionPane.showMessageDialog(this, "Student added successfully!");
+            loadAllStudents();
+        } 
+        
+        else 
+        {
+            JOptionPane.showMessageDialog(this, "Error adding student.");
+        }
+    }//GEN-LAST:event_buttonAddStudent1ActionPerformed
+
+    private void buttonRemoveStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveStudent1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonRemoveStudent1ActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +261,18 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Refresh;
+    private javax.swing.JButton buttonAddStudent1;
+    private javax.swing.JButton buttonLogOut;
+    private javax.swing.JButton buttonRemoveStudent1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField searchField;
+    private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
 }

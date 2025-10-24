@@ -163,6 +163,8 @@ public class DatabaseManager
             System.out.println("Error inserting default admin: " + e.getMessage());
         }
     }
+    
+    
 }
 
     public static Connection getConnection() 
