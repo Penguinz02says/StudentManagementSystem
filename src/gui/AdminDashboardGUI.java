@@ -10,11 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import gui.AddStudentForm;
+import gui.AdminLoginGUI;
 /**
  *
  * @author airi
  */
-public class AdminDashboardGUI extends javax.swing.JFrame {
+public class AdminDashboardGUI extends javax.swing.JFrame 
+{
 
     /**
      * Creates new form AdminDashboard
@@ -40,15 +42,16 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        buttonAddStudent1 = new javax.swing.JButton();
-        buttonRemoveStudent1 = new javax.swing.JButton();
         buttonLogOut = new javax.swing.JButton();
+        jButtonCourses = new javax.swing.JButton();
+        jButtonDashboard1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         searchField = new javax.swing.JTextField();
         Refresh = new javax.swing.JButton();
+        buttonAddStudent1 = new javax.swing.JButton();
+        buttonRemoveStudent1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,23 +87,6 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jLabel2.setText("Dashboard");
-
-        buttonAddStudent1.setText("Add Student");
-        buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAddStudent1ActionPerformed(evt);
-            }
-        });
-
-        buttonRemoveStudent1.setText("Remove Student");
-        buttonRemoveStudent1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRemoveStudent1ActionPerformed(evt);
-            }
-        });
-
         buttonLogOut.setText("Log Out");
         buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,41 +94,48 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonCourses.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButtonCourses.setText("Courses");
+        jButtonCourses.setBorder(null);
+        jButtonCourses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCoursesActionPerformed(evt);
+            }
+        });
+
+        jButtonDashboard1.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        jButtonDashboard1.setText("Dashboard");
+        jButtonDashboard1.setBorder(null);
+        jButtonDashboard1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDashboard1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonCourses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonDashboard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonRemoveStudent1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonAddStudent1))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonLogOut)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(buttonLogOut)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 224, Short.MAX_VALUE)
-                .addComponent(buttonAddStudent1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonRemoveStudent1)
-                .addGap(171, 171, 171)
+                .addGap(16, 16, 16)
+                .addComponent(jButtonDashboard1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonCourses)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
                 .addComponent(buttonLogOut)
-                .addContainerGap())
+                .addGap(17, 17, 17))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 150, 510));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 150, 510));
 
         jLabel3.setText("All Students");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
@@ -168,7 +161,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 650, 410));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 650, 370));
 
         searchField.setText("Search");
         searchField.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +179,22 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
         });
         jPanel1.add(Refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, -1, -1));
 
+        buttonAddStudent1.setText("Add Student");
+        buttonAddStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddStudent1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonAddStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 500, 126, -1));
+
+        buttonRemoveStudent1.setText("Remove Student");
+        buttonRemoveStudent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRemoveStudent1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(buttonRemoveStudent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 500, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,7 +211,16 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLogOutActionPerformed
-        // TODO add your handling code here:
+       int userConfirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Confirm Log Out", JOptionPane.YES_NO_OPTION);
+
+       System.out.println("Logout button pressed");
+        if (userConfirm != JOptionPane.YES_OPTION) return;
+
+        this.dispose();
+
+        AdminLoginGUI loginGUI = new AdminLoginGUI();
+
+        loginGUI.setVisible(true);
     }//GEN-LAST:event_buttonLogOutActionPerformed
 
     private void buttonAddStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddStudent1ActionPerformed
@@ -214,16 +232,51 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonAddStudent1ActionPerformed
 
     private void buttonRemoveStudent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveStudent1ActionPerformed
-        // TODO add your handling code here:
+        
+    int selected = studentTable.getSelectedRow();
+    if (selected == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a student to remove.");
+        return;
+    }
+
+    String userID = studentTable.getValueAt(selected, 0).toString();
+
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to remove this student?",
+        "Confirm Removal",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) return;
+
+    StudentData studentData = new StudentData();
+    boolean success = studentData.deleteStudent(userID);
+
+    if (success) {
+        JOptionPane.showMessageDialog(this, "Student has been removed successfully.");
+        loadStudentTable(); // refresh table properly
+    } else {
+        JOptionPane.showMessageDialog(this, "Failed to remove student. Check database constraints.");
+    }
+
     }//GEN-LAST:event_buttonRemoveStudent1ActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
+        // TODO: implement search funcitonality
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RefreshActionPerformed
+
+    private void jButtonCoursesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoursesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCoursesActionPerformed
+
+    private void jButtonDashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDashboard1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonDashboard1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,13 +308,17 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+            public void run() 
+            {
+
                 new AdminDashboardGUI().setVisible(true);
+
             }
         });
     }
     
-   private void loadStudentTable() {
+   private void loadStudentTable()
+{
     StudentData studentData = new StudentData();
     studentTable.setModel(studentData.getAllStudentsTable());
 }
@@ -272,8 +329,9 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonAddStudent1;
     private javax.swing.JButton buttonLogOut;
     private javax.swing.JButton buttonRemoveStudent1;
+    private javax.swing.JButton jButtonCourses;
+    private javax.swing.JButton jButtonDashboard1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -282,4 +340,6 @@ public class AdminDashboardGUI extends javax.swing.JFrame {
     private javax.swing.JTextField searchField;
     private javax.swing.JTable studentTable;
     // End of variables declaration//GEN-END:variables
+
+
 }

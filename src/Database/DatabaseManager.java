@@ -72,7 +72,7 @@ public class DatabaseManager
                 user_id VARCHAR(8) PRIMARY KEY,
                 studentUsername VARCHAR(50) UNIQUE,   
                 major VARCHAR(100),
-                CONSTRAINT fk_user_student FOREIGN KEY (user_id) REFERENCES users(id)
+                CONSTRAINT fk_user_student FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )
         """;
 
@@ -114,7 +114,7 @@ public class DatabaseManager
                 student_id VARCHAR(8),
                 courseCode VARCHAR(20),
                 PRIMARY KEY (student_id, courseCode),
-                CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(user_id),
+                CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(user_id), ON DELETE CASCADE.
                 CONSTRAINT fk_course FOREIGN KEY (courseCode) REFERENCES courses(courseCode)
             )
         """;

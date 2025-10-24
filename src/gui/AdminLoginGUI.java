@@ -7,7 +7,6 @@ package gui;
 import Logic.AdminLoginManager; 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import gui.AdminDashboardGUI;
 
 /**
  *
@@ -206,6 +205,7 @@ public class AdminLoginGUI extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
         AdminDashboardGUI dashboard = new AdminDashboardGUI();
         dashboard.setVisible(true);
+        
     });
         
     }
