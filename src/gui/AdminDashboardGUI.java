@@ -6,7 +6,6 @@ package gui;
 
 import dataAccess.StudentData;
 import javax.swing.JOptionPane;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import gui.AddStudentForm;

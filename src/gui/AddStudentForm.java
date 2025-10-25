@@ -4,7 +4,6 @@
  */
 package gui;
 
-import Logic.AdminLoginManager; 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import gui.AdminDashboardGUI;
@@ -18,8 +17,7 @@ import javax.swing.JTextField;
  */
 public class AddStudentForm extends javax.swing.JFrame {
     
-    private final AdminLoginManager loginManager = new AdminLoginManager();
-
+    
     /**
      * Creates new form Registration
      */

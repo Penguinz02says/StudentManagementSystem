@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package studentmanagementsystemfinal;
+package model;
 
 /**
  *
@@ -13,11 +13,11 @@ public abstract class Student extends User
     private String major; 
    
 
-    public Student(String ID, String role, String firstName, String lastName, String password, String major, String email, String phoneNumber, String dateOfBirth){
+    public Student(String ID, String username, String role, String firstName, String lastName, String password, String major, String email, String phoneNumber, String dateOfBirth){
         
-        super(ID, password, role, firstName, lastName, email, phoneNumber, dateOfBirth);
+        super(ID, username, password, role, firstName, lastName, email, phoneNumber, dateOfBirth);
         this.major = major;
-        
+         
     }
     
     //Getters + setters---------------------------------------------------------------

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package studentmanagementsystemfinal;
+package model;
 
 /**
  *
@@ -10,8 +10,8 @@ package studentmanagementsystemfinal;
  */
 public abstract class Admin extends User {
 
-    public Admin(String ID, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
-        super(ID, password, firstName, lastName, email, phoneNumber, dateOfBirth, role);
+    public Admin(String ID, String password, String username, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
+        super(ID, username, password, firstName, lastName, email, phoneNumber, dateOfBirth, role);
     }
 
 }

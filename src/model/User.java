@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package studentmanagementsystemfinal;
+package model;
 
 /**
  *
@@ -11,6 +11,7 @@ package studentmanagementsystemfinal;
 public abstract class User 
 {
     protected String ID; 
+    protected String username;
     protected String password; 
     protected String firstName; 
     protected String lastName; 
@@ -20,9 +21,10 @@ public abstract class User
     protected String role; 
     
 
-    public User(String ID, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
+    public User(String ID, String username, String password, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String role) {
        
         this.ID = ID; 
+        this.username = username; 
         this.password = password; 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +46,15 @@ public abstract class User
     public void setID(String ID) {
         this.ID = ID;
     }
+    
+    public String userName() {
+        return username;
+    }
+    
+    public void setUsername(String userName) {
+        this.username = username;
+    }
+    
     
     public String getPassword() {
         return password;

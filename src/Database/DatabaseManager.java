@@ -40,8 +40,7 @@ public class DatabaseManager
         createUsersTable();
         createStudentsTable();
         createAdminsTable();
-        createCoursesTable();
-        createStudentCoursesTable();
+        
     }
     
     //users table
@@ -90,36 +89,6 @@ public class DatabaseManager
         """;
 
         executeTableCreation(sql, "admins");
-    }
-
-    //courses table
-    private void createCoursesTable() 
-    {
-        String sql = """
-            CREATE TABLE courses (
-                courseCode VARCHAR(20) PRIMARY KEY,
-                courseName VARCHAR(100),
-                credits DOUBLE
-            )
-        """;
-
-        executeTableCreation(sql, "courses");
-    }
-
-    //studentcourses table
-    private void createStudentCoursesTable() 
-    {
-        String sql = """
-            CREATE TABLE studentCourses (
-                student_id VARCHAR(8),
-                courseCode VARCHAR(20),
-                PRIMARY KEY (student_id, courseCode),
-                CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(user_id), ON DELETE CASCADE.
-                CONSTRAINT fk_course FOREIGN KEY (courseCode) REFERENCES courses(courseCode)
-            )
-        """;
-
-        executeTableCreation(sql, "studentCourses");
     }
 
     // Helper method for table creation exception handling
