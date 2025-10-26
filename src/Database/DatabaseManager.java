@@ -40,7 +40,8 @@ public class DatabaseManager
         createUsersTable();
         createStudentsTable();
         createAdminsTable();
-        
+        createCoursesTable();
+        createEnrollmentsTable();
     }
     
     //users table
@@ -90,7 +91,35 @@ public class DatabaseManager
 
         executeTableCreation(sql, "admins");
     }
+    
+    //Courses Table
+    private void createCoursesTable() {
+        String sql = """
+            CREATE TABLE courses (
+                courseID VARCHAR(10) PRIMARY KEY,
+                courseName VARCHAR(100) NOT NULL,
+                credits INTEGER
+            )
+        """;
+        
+        executeTableCreation(sql, "courses");
+        
+    }
+    
+    //Enrollments
+    private void createEnrollmentsTable() {
+        String sql = """
+            CREATE TABLE enrollments (
+                studentID VARCHAR(8) NOT NULL,
+                courseID VARCHAR(10) NOT NULL,
+                CONSTRAINT fk_student FOREIGN KEY (studentID) REFERENCES students(user_id),
+                CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES courses(courseID)
+            )
+        """;
 
+        executeTableCreation(sql, "enrollments");
+    }
+    
     // Helper method for table creation exception handling
     private void executeTableCreation(String sql, String tableName) {
         try (Statement stmt = conn.createStatement()) 
