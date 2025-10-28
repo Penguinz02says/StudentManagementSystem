@@ -10,23 +10,21 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
+import model.Student;
 
 /**
  *
  * @author airi
  */
-public class StudentData 
-{
+public class StudentData {
 
     private final Connection conn;
 
-    public StudentData() 
-    {
+    public StudentData() {
         this.conn = DatabaseManager.getConnection();
     }
 
-    public boolean insertStudent(String id, String major) 
-    {
+    public boolean insertStudent(String id, String major) {
         String sql = "INSERT INTO students (user_id, major) VALUES (?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -41,11 +39,9 @@ public class StudentData
         }
 
     }
-    
-    //function coded with help of chatgpt
 
-    public DefaultTableModel getAllStudentsTable() 
-    {
+    //function coded with help of chatgpt
+    public DefaultTableModel getAllStudentsTable() {
         String sql = """
             SELECT s.user_id, u.username, u.firstName, u.lastName, s.major, u.email, u.phoneNumber, u.dateOfBirth
             FROM students s
@@ -55,15 +51,17 @@ public class StudentData
         """;
 
         DefaultTableModel model = new DefaultTableModel(
-            new String[]{"User ID", "Username", "First Name", "Last Name", "Major", "Email", "Phone", "DOB"}, 
-            0
-        );
+                new String[]{"User ID", "Username", "First Name", "Last Name", "Major", "Email", "Phone", "DOB"},
+                0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
 
-            while (rs.next()) 
-            {
+            while (rs.next()) {
                 model.addRow(new Object[]{
                     rs.getString("user_id"),
                     rs.getString("username"),
@@ -76,59 +74,72 @@ public class StudentData
                 });
             }
 
-        } catch (SQLException e) 
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
 
         return model;
     }
-    
-    public boolean deleteStudent(String userID)
-    {
+
+    public boolean deleteStudent(String userID) {
         String deleteCourses = "DELETE FROM studentCourses WHERE student_id = ?";
         String deleteStudent = "DELETE FROM students WHERE user_id = ?";
         String deleteUser = "DELETE FROM users WHERE id = ?";
-    
-    try(PreparedStatement pstmt1 = conn.prepareStatement(deleteCourses);
-        PreparedStatement pstmt2 = conn.prepareStatement(deleteStudent);
-        PreparedStatement pstmt3 = conn.prepareStatement(deleteUser)) 
-        {
-        pstmt1.setString(1, userID);
-        pstmt1.executeUpdate();
-        
-        
-        pstmt2.setString(1, userID);
-        int studentsDeleted = pstmt2.executeUpdate();
-        
-       
-        pstmt3.setString(1, userID);
-        int usersDeleted = pstmt3.executeUpdate();
-        
-        
-        return studentsDeleted > 0;
-        } 
-    
-    catch (SQLException e) 
+
+        try (PreparedStatement pstmt1 = conn.prepareStatement(deleteCourses); PreparedStatement pstmt2 = conn.prepareStatement(deleteStudent); PreparedStatement pstmt3 = conn.prepareStatement(deleteUser)) {
+            pstmt1.setString(1, userID);
+            pstmt1.executeUpdate();
+
+            pstmt2.setString(1, userID);
+            int studentsDeleted = pstmt2.executeUpdate();
+
+            pstmt3.setString(1, userID);
+            int usersDeleted = pstmt3.executeUpdate();
+
+            return studentsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    //for opening StudentDetailsGUI
+    public Student getStudentById(String id) throws SQLException 
     {
-        e.printStackTrace();
-        return false;
-    }
-   
-}
+        String sql = """
+        SELECT s.user_id, u.username, u.firstName, u.lastName, s.major, u.email, u.phoneNumber, u.dateOfBirth
+        FROM students s
+        INNER JOIN users u ON s.user_id = u.id
+        WHERE s.user_id = ?
+    """;
 
-    public getStudentByStudentId(String studentId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) 
+        {
+            pstmt.setString(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) 
+            {
+                if (rs.next()) 
+                {
+                    Student student = new Student();
+                    student.setID(rs.getString("user_id"));
+                    student.setUsername(rs.getString("username"));
+                    student.setFirstName(rs.getString("firstName"));
+                    student.setLastName(rs.getString("lastName"));
+                    student.setMajor(rs.getString("major"));
+                    student.setEmail(rs.getString("email"));
+                    student.setPhoneNumber(rs.getString("phoneNumber"));
+                    student.setDateOfBirth(rs.getString("dateOfBirth"));
+                    return student;
+                } 
+                
+                else 
+                {
+                    throw new SQLException("Student not found with ID: " + id);
+                }
+            }
+        }
 
-    public getStudentById(String studentId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public getStudentById(String studentId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
- 
 }

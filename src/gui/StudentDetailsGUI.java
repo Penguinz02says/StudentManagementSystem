@@ -16,7 +16,7 @@ import java.util.List;
  * @author kiandrasin
  */
 public class StudentDetailsGUI extends javax.swing.JFrame {
-    private JTextField studentIdField, studentNameField, studentEmailField;
+
     private JTable coursesTable;
     private JButton addCourseButton, removeCourseButton;
     private String studentId;
@@ -39,19 +39,14 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         studentPanel.setBorder(BorderFactory.createTitledBorder("Student Info"));
         
         studentPanel.add(new JLabel("Student ID:"));
-        studentIdField = new JTextField();
-        studentIdField.setEditable(false);
-        studentPanel.add(studentIdField);
-        
+ 
         studentPanel.add(new JLabel("Name:"));
-        studentNameField = new JTextField();
-        studentNameField.setEditable(false);
-        studentPanel.add(studentNameField);
-        
+
         studentPanel.add(new JLabel("Email:"));
-        studentEmailField = new JTextField();
-        studentEmailField.setEditable(false);
-        studentPanel.add(studentEmailField);
+        
+        jTextFieldStudentID.setEditable(false);
+        jTextFieldStudentName.setEditable(false);
+        jTextFieldStudentEmail.setEditable(false);
         
         add(studentPanel, BorderLayout.NORTH);
         
@@ -80,17 +75,17 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    private void loadStudentDetails() {
-        StudentData studentData = new StudentData();
-        try {
-            var student = studentData.getStudentById(studentId);
-            studentIdField.setText(student.getId());
-            studentNameField.setText(student.getName());
-            studentEmailField.setText(student.getEmail());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Failed to load student details: " + e.getMessage());
-        }
+  private void loadStudentDetails() {
+    StudentData studentData = new StudentData();
+    try {
+        var student = studentData.getStudentById(studentId);
+        jTextFieldStudentID.setText(student.getID());
+        jTextFieldStudentName.setText(student.getFirstName() + " " + student.getLastName());
+        jTextFieldStudentEmail.setText(student.getEmail());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Failed to load student details: " + e.getMessage());
     }
+}
     
     private void loadEnrolledCourses() {
        CoursesData coursesData = new CoursesData();
@@ -98,7 +93,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Course ID", "Course Name", "Credits"}, 0);
         for (Course c : courses) {
-            model.addRow(new Object[]{c.getId(), c.getName(), c.getCredits()});
+            model.addRow(new Object[]{c.getCourseID(), c.getCourseName(), c.getCredits()});
         }
         coursesTable.setModel(model);
     }
@@ -119,10 +114,10 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         studentName = new javax.swing.JLabel();
         studentID = new javax.swing.JLabel();
-        email = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        Email = new javax.swing.JLabel();
+        jTextFieldStudentName = new javax.swing.JTextField();
+        jTextFieldStudentID = new javax.swing.JTextField();
+        jTextFieldStudentEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         enrolledCourseList = new javax.swing.JTable();
         removeButton = new javax.swing.JButton();
@@ -161,16 +156,22 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
 
         studentName.setText("Name:");
-        jPanel1.add(studentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, 20));
+        jPanel1.add(studentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, 20));
 
         studentID.setText("Student ID:");
-        jPanel1.add(studentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, -1, 20));
+        jPanel1.add(studentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, 20));
 
-        email.setText("Email:");
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, -1, 20));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, -1, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, -1, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, -1, -1));
+        Email.setText("Email:");
+        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, 20));
+
+        jTextFieldStudentName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldStudentNameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFieldStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
+        jPanel1.add(jTextFieldStudentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
+        jPanel1.add(jTextFieldStudentEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
 
         enrolledCourseList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,9 +189,19 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 510, 300));
 
         removeButton.setText("Remove");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 520, -1, -1));
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
 
         jLabel2.setText("Enrolled Course");
@@ -209,6 +220,18 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void jTextFieldStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStudentNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldStudentNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,33 +270,22 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Email;
     private javax.swing.JButton addButton;
-    private javax.swing.JLabel email;
     private javax.swing.JTable enrolledCourseList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextFieldStudentEmail;
+    private javax.swing.JTextField jTextFieldStudentID;
+    private javax.swing.JTextField jTextFieldStudentName;
     private javax.swing.JButton removeButton;
     private javax.swing.JLabel studentID;
     private javax.swing.JLabel studentName;
     // End of variables declaration//GEN-END:variables
 
-    public void setDefaultCloseOperation(int EXIT_ON_CLOSE) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Container getContentPane() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void pack() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     private void addCourseAction() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

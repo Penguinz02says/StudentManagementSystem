@@ -108,14 +108,22 @@ public class DatabaseManager
     
     //Enrollments
     private void createEnrollmentsTable() {
-        String sql = """
-            CREATE TABLE enrollments (
-                studentID VARCHAR(8) NOT NULL,
-                courseID VARCHAR(10) NOT NULL,
-                CONSTRAINT fk_student FOREIGN KEY (studentID) REFERENCES students(user_id),
-                CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES courses(courseID)
-            )
-        """;
+    String sql = """
+        CREATE TABLE enrollments (
+            studentID VARCHAR(8) NOT NULL,
+            courseID VARCHAR(10) NOT NULL,
+            CONSTRAINT fk_student FOREIGN KEY (studentID) REFERENCES students(user_id),
+            CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES courses(courseID)
+        )
+    """;
+    
+    try (Statement stmt = conn.createStatement()) {
+        stmt.execute(sql);
+        System.out.println("Enrollments table created successfully.");
+    } catch (SQLException e) {
+        System.out.println("Error creating enrollments table: " + e.getMessage());
+    }
+
 
         executeTableCreation(sql, "enrollments");
     }

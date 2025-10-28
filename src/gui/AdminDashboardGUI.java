@@ -369,6 +369,20 @@ public class AdminDashboardGUI extends javax.swing.JFrame
 {
     StudentData studentData = new StudentData();
     studentTable.setModel(studentData.getAllStudentsTable());
+    
+    studentTable.addMouseListener(new java.awt.event.MouseAdapter() 
+    {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) 
+    {
+        if (evt.getClickCount() == 2 && studentTable.getSelectedRow() != -1) {
+            int row = studentTable.getSelectedRow();
+            String studentId = studentTable.getValueAt(row, 0).toString();
+            new StudentDetailsGUI(studentId).setVisible(true);
+        }
+    }
+});
+
 }
    
    // helper method coded with ChatGPT so that textfield shows placeholder text until user clicks to type

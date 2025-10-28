@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Course;
+import Database.DatabaseManager; 
 
 /**
  *
@@ -19,6 +20,32 @@ public class CourseData {
     public CourseData(Connection conn) {
         this.conn = conn;
     }
+    
+    //geting student course by ID
+    public List<Course> getCoursesByStudentId(String studentId) {
+    List<Course> courses = new ArrayList<>();
+    String sql = "SELECT c.course_id, c.course_name, c.credits " +
+                 "FROM courses c " +
+                 "JOIN enrollment e ON c.course_id = e.course_id " +
+                 "WHERE e.student_id = ?";
+
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, studentId);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Course course = new Course(
+                rs.getString("course_id"),
+                rs.getString("course_name"),
+                rs.getInt("credits")
+            );
+            courses.add(course);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return courses;
+   }
     
     public void insertCourse(Course course) throws SQLException {
         String query = "INSERT INTO courses (courseID, courseName, credits) VALUES (?, ?, ?)";
