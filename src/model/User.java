@@ -47,7 +47,7 @@ public abstract class User
         this.ID = ID;
     }
     
-    public String userName() {
+    public String getUserName() {
         return username;
     }
     

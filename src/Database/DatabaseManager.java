@@ -4,10 +4,12 @@
  */
 package Database;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import dataAccess.CourseData;
 
 /**
  *
@@ -23,7 +25,7 @@ public class DatabaseManager
     // connect to derby
     public DatabaseManager() throws SQLException 
     {
-        String URL = "jdbc:derby://localhost:1527/StudentManagementDB;create=true";
+        String URL = "jdbc:derby:StudentManagementDB;create=true";
         String user = "app";
         String password = "password";
 
@@ -32,7 +34,13 @@ public class DatabaseManager
 
         createTables();
         insertDefaultAdmin();
+        
+        CourseData courseData = new CourseData(conn);
+        courseData.insertCourses();
     }
+    
+    
+
 
     // Create all tables 
     private void createTables() throws SQLException 
@@ -92,40 +100,32 @@ public class DatabaseManager
         executeTableCreation(sql, "admins");
     }
     
+     
+        
     //Courses Table
-    private void createCoursesTable() {
+     private void createCoursesTable() {
         String sql = """
-            CREATE TABLE courses (
-                courseID VARCHAR(10) PRIMARY KEY,
-                courseName VARCHAR(100) NOT NULL,
-                credits INTEGER
+            CREATE TABLE COURSES_TABLE (
+                COURSE_ID VARCHAR(10) PRIMARY KEY,
+                COURSE_NAME VARCHAR(100) NOT NULL,
+                CREDITS INTEGER NOT NULL
             )
         """;
-        
-        executeTableCreation(sql, "courses");
-        
+        executeTableCreation(sql, "COURSES_TABLE");
     }
     
     //Enrollments
-    private void createEnrollmentsTable() {
-    String sql = """
-        CREATE TABLE enrollments (
-            studentID VARCHAR(8) NOT NULL,
-            courseID VARCHAR(10) NOT NULL,
-            CONSTRAINT fk_student FOREIGN KEY (studentID) REFERENCES students(user_id),
-            CONSTRAINT fk_course FOREIGN KEY (courseID) REFERENCES courses(courseID)
-        )
-    """;
-    
-    try (Statement stmt = conn.createStatement()) {
-        stmt.execute(sql);
-        System.out.println("Enrollments table created successfully.");
-    } catch (SQLException e) {
-        System.out.println("Error creating enrollments table: " + e.getMessage());
-    }
-
-
-        executeTableCreation(sql, "enrollments");
+   private void createEnrollmentsTable() {
+        String sql = """
+            CREATE TABLE ENROLLMENTS (
+                STUDENT_ID VARCHAR(8) NOT NULL,
+                COURSE_ID VARCHAR(10) NOT NULL,
+                PRIMARY KEY (STUDENT_ID, COURSE_ID),
+                FOREIGN KEY (STUDENT_ID) REFERENCES STUDENTS(USER_ID),
+                FOREIGN KEY (COURSE_ID) REFERENCES COURSES_TABLE(COURSE_ID)
+            )
+        """;
+        executeTableCreation(sql, "ENROLLMENTS");
     }
     
     // Helper method for table creation exception handling
@@ -144,7 +144,11 @@ public class DatabaseManager
             {
                 System.out.println("Error creating table '" + tableName + "': " + e.getMessage());
             }
+            
+            
         }
+        
+        
     }
     
     //insert default Admin

@@ -8,68 +8,112 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Course;
-import Database.DatabaseManager; 
 
 /**
  *
  * @author kiandrasin
  */
 public class CourseData {
-    private final Connection conn;
     
-    public CourseData(Connection conn) {
+    private final Connection conn; 
+    
+      public CourseData(Connection conn) {
         this.conn = conn;
     }
     
-    //geting student course by ID
-    public List<Course> getCoursesByStudentId(String studentId) {
-    List<Course> courses = new ArrayList<>();
-    String sql = "SELECT c.course_id, c.course_name, c.credits " +
-                 "FROM courses c " +
-                 "JOIN enrollment e ON c.course_id = e.course_id " +
-                 "WHERE e.student_id = ?";
-
-    try (Connection conn = DatabaseManager.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, studentId);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            Course course = new Course(
-                rs.getString("course_id"),
-                rs.getString("course_name"),
-                rs.getInt("credits")
-            );
-            courses.add(course);
+    public void insertCourses() {
+    try {
+        String checkSql = "SELECT COUNT(*) FROM COURSES_TABLE";
+        try (PreparedStatement stmt = conn.prepareStatement(checkSql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next() && rs.getInt(1) == 0) {
+                
+                insertCourse(new Course("COMP603", "Program Design and Construction - Software Construction", 15));
+                insertCourse(new Course("COMP604", "Algorithms and Data Structures", 15));
+                insertCourse(new Course("COMP605", "Database Systems", 15));
+                insertCourse(new Course("COMP606", "Human-Computer Interaction", 15));
+                System.out.println("Courses inserted successfully.");
+            }
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    return courses;
-   }
-    
+}
     public void insertCourse(Course course) throws SQLException {
-        String query = "INSERT INTO courses (courseID, courseName, credits) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        String sql = "INSERT INTO COURSES_TABLE (COURSE_ID, COURSE_NAME, CREDITS) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, course.getCourseID());
             stmt.setString(2, course.getCourseName());
             stmt.setInt(3, course.getCredits());
             stmt.executeUpdate();
         }
     }
-    
-    public List<Course> getAllCourse() throws SQLException {
-        List<Course> list = new ArrayList<>();
-        String query = "SELECT * FROM courses";
-        try (PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery()) {
+
+    // Get all courses a student is enrolled in
+     public List<Course> getCoursesByStudentId(String studentId) throws SQLException {
+        List<Course> courses = new ArrayList<>();
+        String sql = """
+            SELECT c.COURSE_ID, c.COURSE_NAME, c.CREDITS
+            FROM COURSES_TABLE c
+            JOIN ENROLLMENTS e ON c.COURSE_ID = e.COURSE_ID
+            WHERE e.STUDENT_ID = ?
+        """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(new Course(
+                            rs.getString("COURSE_ID"),
+                            rs.getString("COURSE_NAME"),
+                            rs.getInt("CREDITS")
+                    ));
+                }
+            }
+        }
+        return courses;
+    }
+     
+        // Remove a student's enrollment
+    public void removeEnrollment(String studentId, String courseId) throws SQLException {
+        String sql = "DELETE FROM ENROLLMENTS WHERE STUDENT_ID = ? AND COURSE_ID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            stmt.setString(2, courseId);
+            stmt.executeUpdate();
+        }
+    }
+
+
+    // Get all courses
+    public List<Course> getAllCourses() throws SQLException {
+        List<Course> courses = new ArrayList<>();
+        String sql = "SELECT COURSE_ID, COURSE_NAME, CREDITS FROM COURSES_TABLE";
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                list.add(new Course(
-                rs.getString("courseID"),
-                rs.getString("courseName"),
-                rs.getInt("credits")
+                courses.add(new Course(
+                        rs.getString("COURSE_ID"),
+                        rs.getString("COURSE_NAME"),
+                        rs.getInt("CREDITS")
                 ));
             }
         }
-        return list;
+        return courses;
+    }
+    
+     // Enroll a student in a course
+    public void enrollStudentInCourse(String studentId, String courseId) throws SQLException {
+        String sql = "INSERT INTO ENROLLMENTS (STUDENT_ID, COURSE_ID) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, studentId);
+            stmt.setString(2, courseId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            if ("23505".equals(e.getSQLState())) {
+                System.out.println("Student already enrolled in this course.");
+            } else {
+                throw e;
+            }
+        }
     }
 }

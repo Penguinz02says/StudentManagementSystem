@@ -5,75 +5,45 @@
 package gui;
 
 import dataAccess.StudentData;
-import dataAccess.CourseData;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import dataAccess.CourseData; 
+import Database.DatabaseManager;
 import model.Course;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.util.List;
+
 /**
  *
  * @author kiandrasin
  */
 public class StudentDetailsGUI extends javax.swing.JFrame {
 
-    private JTable coursesTable;
-    private JButton addCourseButton, removeCourseButton;
+   
     private String studentId;
+    
     
     /**
      * Creates new form StudentDetailsGUI
      */
-    public StudentDetailsGUI(String studentId) {
+    public StudentDetailsGUI(String studentId) 
+    {
         this.studentId = studentId;
         initComponents();
         loadStudentDetails();
         
-        setTitle("Student Details");
-        setSize(700, 500);
-        setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        //Panel for student info
-        JPanel studentPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        studentPanel.setBorder(BorderFactory.createTitledBorder("Student Info"));
-        
-        studentPanel.add(new JLabel("Student ID:"));
- 
-        studentPanel.add(new JLabel("Name:"));
+    jTextFieldStudentID.setEditable(false);
+    jTextFieldStudentName.setEditable(false);
+    jTextFieldStudentEmail.setEditable(false);
+    
+     loadEnrolledCourses();
 
-        studentPanel.add(new JLabel("Email:"));
-        
-        jTextFieldStudentID.setEditable(false);
-        jTextFieldStudentName.setEditable(false);
-        jTextFieldStudentEmail.setEditable(false);
-        
-        add(studentPanel, BorderLayout.NORTH);
-        
-        //Panel for course table
-        coursesTable = new JTable();
-        JScrollPane tableScroll = new JScrollPane(coursesTable);
-        tableScroll.setBorder(BorderFactory.createTitledBorder("Enrolled Courses"));
-        add(tableScroll, BorderLayout.CENTER);
-        
-        //Panel for button
-        JPanel buttonPanel = new JPanel();
-        addCourseButton = new JButton("Add Course");
-        removeCourseButton = new JButton("Remove Course");
-        
-        addCourseButton.addActionListener(e -> addCourseAction());
-        removeCourseButton.addActionListener(e -> removeCourseAction());
-        
-        buttonPanel.add(addCourseButton);
-        buttonPanel.add(removeCourseButton);
-        add(buttonPanel, BorderLayout.SOUTH);
-        
-        setLocationRelativeTo(null);
     }
 
-    private StudentDetailsGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
   private void loadStudentDetails() {
     StudentData studentData = new StudentData();
@@ -87,16 +57,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
     }
 }
     
-    private void loadEnrolledCourses() {
-       CoursesData coursesData = new CoursesData();
-        List<Course> courses = coursesData.getCoursesByStudentId(studentId);
-        
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Course ID", "Course Name", "Credits"}, 0);
-        for (Course c : courses) {
-            model.addRow(new Object[]{c.getCourseID(), c.getCourseName(), c.getCredits()});
-        }
-        coursesTable.setModel(model);
-    }
+
     
     
 
@@ -119,7 +80,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jTextFieldStudentID = new javax.swing.JTextField();
         jTextFieldStudentEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        enrolledCourseList = new javax.swing.JTable();
+        coursesTable = new javax.swing.JTable();
         removeButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -173,7 +134,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jPanel1.add(jTextFieldStudentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
         jPanel1.add(jTextFieldStudentEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
 
-        enrolledCourseList.setModel(new javax.swing.table.DefaultTableModel(
+        coursesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -183,29 +144,44 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
             new String [] {
                 "Course ID", "Course Name", "Credit"
             }
-        ));
-        jScrollPane1.setViewportView(enrolledCourseList);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 510, 300));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(coursesTable);
+        if (coursesTable.getColumnModel().getColumnCount() > 0) {
+            coursesTable.getColumnModel().getColumn(0).setResizable(false);
+            coursesTable.getColumnModel().getColumn(1).setResizable(false);
+            coursesTable.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        removeButton.setText("Remove");
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 510, 270));
+
+        removeButton.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        removeButton.setText("Remove Course");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 520, -1, -1));
+        jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, -1, -1));
 
-        addButton.setText("Add");
+        addButton.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        addButton.setText("Add Course");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
+        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 479, -1, 30));
 
-        jLabel2.setText("Enrolled Course");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, -1, 30));
+        jLabel2.setText("Enrolled Courses");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,14 +191,21 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+    
+        dialog.setVisible(true);
+
+    Course selected = dialog.getSelectedCourse();
+    if (selected != null) {
+        JOptionPane.showMessageDialog(this, "Added course: " + selected.getCourseName());
+    }
+    
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
@@ -237,30 +220,8 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        SwingUtilities.invokeLater(() -> new StudentDetailsGUI("S001").setVisible(true));
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentDetailsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentDetailsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentDetailsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StudentDetailsGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
+        
+    
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -272,7 +233,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Email;
     private javax.swing.JButton addButton;
-    private javax.swing.JTable enrolledCourseList;
+    private javax.swing.JTable coursesTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -286,26 +247,70 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
     private javax.swing.JLabel studentName;
     // End of variables declaration//GEN-END:variables
 
+    private void loadEnrolledCourses() {
+    try {
+        CourseData courseData = new CourseData(DatabaseManager.getConnection());
+        List<Course> enrolled = courseData.getCoursesByStudentId(studentId);
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"Course ID", "Course Name", "Credits"});
+
+        for (Course c : enrolled) {
+            model.addRow(new Object[]{c.getCourseID(), c.getCourseName(), c.getCredits()});
+        }
+
+        coursesTable.setModel(model);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Failed to load courses: " + e.getMessage());
+    }
+
+}
 
     private void addCourseAction() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try {
+        CourseData courseData = new CourseData(DatabaseManager.getConnection());
+
+        // Example: choose the first course from all courses that student is not enrolled in
+        List<Course> allCourses = courseData.getAllCourse();
+        List<Course> enrolled = courseData.getCoursesByStudentId(studentId);
+
+        Course toAdd = null;
+        for (Course c : allCourses) {
+            boolean already = enrolled.stream().anyMatch(ec -> ec.getCourseID().equals(c.getCourseID()));
+            if (!already) {
+                toAdd = c;
+                break;
+            }
+        }
+
+        if (toAdd != null) {
+            courseData.enrollStudent(studentId, toAdd.getCourseID());
+            JOptionPane.showMessageDialog(this, "Enrolled in: " + toAdd.getCourseName());
+            loadEnrolledCourses();
+        } else {
+            JOptionPane.showMessageDialog(this, "No available courses to add");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Failed to add course: " + e.getMessage());
     }
+}        
 
     private void removeCourseAction() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    int selectedRow = coursesTable.getSelectedRow();
+    if (selectedRow >= 0) {
+        String courseId = (String) coursesTable.getValueAt(selectedRow, 0);
+        try {
+            CourseData courseData = new CourseData(DatabaseManager.getConnection());
+            courseData.removeEnrollment(studentId, courseId);
+            JOptionPane.showMessageDialog(this, "Removed course successfully");
+            loadEnrolledCourses();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Failed to remove course: " + e.getMessage());
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select a course to remove");
     }
+} 
 
-    private static class CoursesData {
-
-        public CoursesData() {
-        }
-
-        private List<Course> getCoursesByStudentId(String studentId) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        private boolean removeCourseFromStudent(String studentId, String courseId) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-    }
 }
