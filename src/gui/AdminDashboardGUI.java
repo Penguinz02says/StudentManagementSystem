@@ -375,7 +375,7 @@ public class AdminDashboardGUI extends javax.swing.JFrame
     @Override
     public void mouseClicked(java.awt.event.MouseEvent evt) 
     {
-        if (evt.getClickCount() == 1 && studentTable.getSelectedRow() != -1) {
+        if (evt.getClickCount() == 2 && studentTable.getSelectedRow() != -1) {
             int row = studentTable.getSelectedRow();
             String studentId = studentTable.getValueAt(row, 0).toString();
             new StudentDetailsGUI(studentId).setVisible(true);
