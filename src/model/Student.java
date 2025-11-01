@@ -36,6 +36,7 @@ public class Student extends User
     public void setMajor(String major) {
         this.major = major;
     }
+    
 
     @Override
     public String toString() {

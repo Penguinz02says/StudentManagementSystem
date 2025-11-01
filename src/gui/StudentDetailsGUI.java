@@ -4,17 +4,18 @@
  */
 package gui;
 
+
+
 import dataAccess.StudentData;
 
-import java.sql.Connection;
+
 import java.sql.SQLException;
 import dataAccess.CourseData; 
 import Database.DatabaseManager;
 import model.Course;
+import model.Student; 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -23,9 +24,8 @@ import java.util.List;
  */
 public class StudentDetailsGUI extends javax.swing.JFrame {
 
-   
+    private Student student;
     private String studentId;
-    
     
     /**
      * Creates new form StudentDetailsGUI
@@ -44,11 +44,10 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
 
     }
 
-    
-  private void loadStudentDetails() {
+private void loadStudentDetails() {
     StudentData studentData = new StudentData();
     try {
-        var student = studentData.getStudentById(studentId);
+        this.student = studentData.getStudentById(studentId);
         jTextFieldStudentID.setText(student.getID());
         jTextFieldStudentName.setText(student.getFirstName() + " " + student.getLastName());
         jTextFieldStudentEmail.setText(student.getEmail());
@@ -84,6 +83,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         removeButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,22 +117,22 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
 
         studentName.setText("Name:");
-        jPanel1.add(studentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, 20));
+        jPanel1.add(studentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, 20));
 
         studentID.setText("Student ID:");
-        jPanel1.add(studentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, 20));
+        jPanel1.add(studentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, 20));
 
         Email.setText("Email:");
-        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, 20));
+        jPanel1.add(Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, -1, 20));
 
         jTextFieldStudentName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldStudentNameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
-        jPanel1.add(jTextFieldStudentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
-        jPanel1.add(jTextFieldStudentEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
+        jPanel1.add(jTextFieldStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, -1, 20));
+        jPanel1.add(jTextFieldStudentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, -1, 20));
+        jPanel1.add(jTextFieldStudentEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, -1, 20));
 
         coursesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,28 +160,38 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
             coursesTable.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 510, 270));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 510, 270));
 
-        removeButton.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        removeButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         removeButton.setText("Remove Course");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, -1, -1));
+        jPanel1.add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 510, -1, 30));
 
-        addButton.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        addButton.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         addButton.setText("Add Course");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 479, -1, 30));
+        jPanel1.add(addButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, -1, 30));
 
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         jLabel2.setText("Enrolled Courses");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, -1, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, 30));
+
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/3114883.png"))); // NOI18N
+        backButton.setBorder(null);
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,7 +201,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -199,40 +209,35 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
     
+        CourseSelectionDialog dialog = new CourseSelectionDialog(this, student);
         dialog.setVisible(true);
-
-    Course selected = dialog.getSelectedCourse();
-    if (selected != null) {
-        JOptionPane.showMessageDialog(this, "Added course: " + selected.getCourseName());
-    }
+        loadEnrolledCourses();
     
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
+        removeCourseAction();
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void jTextFieldStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStudentNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldStudentNameActionPerformed
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        this.dispose(); 
+        AdminDashboardGUI dashboard = new AdminDashboardGUI();
+        dashboard.setVisible(true);
+    }//GEN-LAST:event_backButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        
     
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StudentDetailsGUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Email;
     private javax.swing.JButton addButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JTable coursesTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -271,7 +276,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         CourseData courseData = new CourseData(DatabaseManager.getConnection());
 
         // Example: choose the first course from all courses that student is not enrolled in
-        List<Course> allCourses = courseData.getAllCourse();
+        List<Course> allCourses = courseData.getAllCourses();
         List<Course> enrolled = courseData.getCoursesByStudentId(studentId);
 
         Course toAdd = null;
@@ -284,7 +289,7 @@ public class StudentDetailsGUI extends javax.swing.JFrame {
         }
 
         if (toAdd != null) {
-            courseData.enrollStudent(studentId, toAdd.getCourseID());
+            courseData.enrollStudentInCourse(studentId, toAdd.getCourseID());
             JOptionPane.showMessageDialog(this, "Enrolled in: " + toAdd.getCourseName());
             loadEnrolledCourses();
         } else {

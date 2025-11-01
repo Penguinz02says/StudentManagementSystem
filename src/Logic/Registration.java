@@ -4,8 +4,6 @@
  */
 package Logic;
 
-import Database.DatabaseManager;
-
 import dataAccess.AdminData;
 import dataAccess.UserData;
 import dataAccess.StudentData;

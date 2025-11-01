@@ -261,8 +261,15 @@ public class AddStudentForm extends javax.swing.JFrame {
     
 
     // validation that all text fields are filled
-    if ( firstName.isEmpty() || lastName.isEmpty() || dob.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
+    if (firstName.isEmpty() || firstName.equals("First Name") ||
+        lastName.isEmpty() || lastName.equals("Last Name") ||
+        dob.isEmpty() || dob.equals("MM/DD/YYYY") ||
+        phone.isEmpty() || phone.equals("Phone Number")) {
+        
+        JOptionPane.showMessageDialog(this, 
+            "Please fill in all required fields before adding a student.", 
+            "Missing Information", 
+            JOptionPane.WARNING_MESSAGE);
         return;
     }
 

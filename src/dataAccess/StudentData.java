@@ -24,6 +24,8 @@ public class StudentData {
         this.conn = DatabaseManager.getConnection();
     }
 
+    
+  
     public boolean insertStudent(String id, String major) {
         String sql = "INSERT INTO students (user_id, major) VALUES (?, ?)";
 

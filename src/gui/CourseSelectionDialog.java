@@ -21,8 +21,10 @@ import java.util.List;
 
 /**
  *
- * @author airi
+ * @author kiandrasin
  */
+
+//class dialog coded with help of chatgpt
 public class CourseSelectionDialog extends JDialog {
 
     private JComboBox<Course> courseCombo;
@@ -39,20 +41,19 @@ public class CourseSelectionDialog extends JDialog {
         setLocationRelativeTo(parent);
 
         try {
-            // Get database connection
+            
             Connection conn = DatabaseManager.getConnection();
 
-            // Fetch all available courses
+  
             CourseData courseData = new CourseData(conn);
             List<Course> courses = courseData.getAllCourses();
 
-            // Populate combo box with courses
             courseCombo = new JComboBox<>(courses.toArray(new Course[0]));
 
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "Error loading courses from database:\n" + e.getMessage(),
+                     e.getMessage(),
                     "Database Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -93,7 +94,6 @@ public class CourseSelectionDialog extends JDialog {
             Connection conn = DatabaseManager.getConnection();
             EnrollmentData enrollmentData = new EnrollmentData(conn);
 
-            // Create enrollment
             Enrollment enrollment = new Enrollment(student, selectedCourse);
             enrollmentData.addEnrollment(enrollment);
 

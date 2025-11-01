@@ -6,7 +6,7 @@ package dataAccess;
 
 /**
  *
- * @author airi
+ * @author kiandrasin
  */
 
 import java.sql.Connection;

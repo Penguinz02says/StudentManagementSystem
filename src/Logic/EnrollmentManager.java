@@ -4,7 +4,6 @@
  */
 package Logic;
 
-import Database.DatabaseManager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
