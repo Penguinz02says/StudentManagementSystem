@@ -85,27 +85,32 @@ public class StudentData {
     }
 
     public boolean deleteStudent(String userID) {
-        String deleteCourses = "DELETE FROM studentCourses WHERE student_id = ?";
-        String deleteStudent = "DELETE FROM students WHERE user_id = ?";
-        String deleteUser = "DELETE FROM users WHERE id = ?";
+        
+    
+    String deleteEnrollments = "DELETE FROM ENROLLMENTS WHERE STUDENT_ID = ?";
+    String deleteStudent = "DELETE FROM students WHERE user_id = ?";
+    String deleteUser = "DELETE FROM users WHERE id = ?";
 
-        try (PreparedStatement pstmt1 = conn.prepareStatement(deleteCourses); PreparedStatement pstmt2 = conn.prepareStatement(deleteStudent); PreparedStatement pstmt3 = conn.prepareStatement(deleteUser)) {
-            pstmt1.setString(1, userID);
-            pstmt1.executeUpdate();
+    try (PreparedStatement pstmt1 = conn.prepareStatement(deleteEnrollments);
+         PreparedStatement pstmt2 = conn.prepareStatement(deleteStudent);
+         PreparedStatement pstmt3 = conn.prepareStatement(deleteUser)) {
 
-            pstmt2.setString(1, userID);
-            int studentsDeleted = pstmt2.executeUpdate();
+        pstmt1.setString(1, userID);
+        pstmt1.executeUpdate();
 
-            pstmt3.setString(1, userID);
-            int usersDeleted = pstmt3.executeUpdate();
+        pstmt2.setString(1, userID);
+        int studentsDeleted = pstmt2.executeUpdate();
 
-            return studentsDeleted > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        pstmt3.setString(1, userID);
+        int usersDeleted = pstmt3.executeUpdate();
 
+        return studentsDeleted > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
 
     //for opening StudentDetailsGUI
     public Student getStudentById(String id) throws SQLException 
